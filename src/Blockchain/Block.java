@@ -23,13 +23,12 @@ public class Block {
             dataTransacciones += t.toString();
         }
 
-        String hashCalculado = HashUtil.aplicarSHA256(
+        return HashUtil.aplicarSHA256(
                 hashAnterior +
-                        Long.toString(selloTiempo) +
-                        Integer.toString(nonce) +
+                        selloTiempo +
+                        nonce +
                         dataTransacciones
         );
-        return hashCalculado;
     }
 
     public void minarBloque(int dificultad) throws BlockchainExeption {
