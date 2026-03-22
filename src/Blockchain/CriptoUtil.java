@@ -30,7 +30,7 @@ public class CriptoUtil {
         }
     }
 
-    public static String llaveAString(Key llave){
+    public static String llaveAString(java.security.Key llave){
         return Base64.getEncoder().encodeToString(llave.getEncoded());
     }
 
@@ -38,7 +38,7 @@ public class CriptoUtil {
         byte[] datosDecodificados = Base64.getDecoder().decode(llaveBase64);
         X509EncodedKeySpec especificacion = new X509EncodedKeySpec(datosDecodificados);
         KeyFactory fabrica = KeyFactory.getInstance("RSA");
-        return (PublicKey) fabrica.generatePrivate(especificacion);
+        return fabrica.generatePublic(especificacion);
     }
 
     public static PrivateKey stringLlavePriv(String llaveBase64) throws Exception {

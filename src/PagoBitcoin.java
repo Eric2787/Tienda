@@ -14,19 +14,28 @@ public class PagoBitcoin implements MetodoPago{
         System.out.println("Pagando con: Bitcoin: $" + monto);
         try {
 
+            // NOTA IMPORTANTE: En un software real, la tienda NUNCA pide la llave privada.
+            // Esto se haría en la app externa del usuario (como MetaMask o Electrum).
             Cartera carteraPrueba = new Cartera();
             Cartera carteraTienda = new Cartera();
 
             String pubKeyPrueba = CriptoUtil.llaveAString(carteraPrueba.llavePublica);
             String privKeyPrueba = CriptoUtil.llaveAString(carteraPrueba.llavePrivada);
 
-            System.out.println("Para usar la llave publica de prueba presiona 1");
+            System.out.println("-------------------------------------------------------");
+            System.out.println(pubKeyPrueba);
+            System.out.println("-------------------------------------------------------");
+            System.out.println(privKeyPrueba);
+
+            System.out.println("\n💡 TIP: Escribe '1' y presiona Enter para usar una Wallet de prueba automáticamente.");
+            System.out.println("-------------------------------------------------------");
+
             System.out.println("Por favor, PEGUE su Llave Pública (o escriba '1' para usar la de prueba):");
             String strLlavePublica = sc.nextLine();
 
-            if (strLlavePublica.equals("1")){
+            if (strLlavePublica.trim().equals("1")) {
                 strLlavePublica = pubKeyPrueba;
-                System.out.println("> Usando Llave Pública de Prueba");
+                System.out.println("> Usando Llave Pública de prueba...");
             }
 
             strLlavePublica = strLlavePublica.replaceAll("\\s+", "");
@@ -35,15 +44,17 @@ public class PagoBitcoin implements MetodoPago{
             System.out.println("\nPor favor, PEGUE su Llave Privada para FIRMAR (o escriba '1' para usar la de prueba):");
             String strLlavePrivada = sc.nextLine();
 
-            if (strLlavePrivada.equals("1")){
+            if (strLlavePrivada.trim().equals("1")) {
                 strLlavePrivada = privKeyPrueba;
-                System.out.println("> Usando Llave Privada de Prueba");
+                System.out.println("> Usando Llave Privada de prueba...");
             }
+
             strLlavePrivada = strLlavePrivada.replaceAll("\\s+", "");
             PrivateKey llavePrivadaCliente = CriptoUtil.stringLlavePriv(strLlavePrivada);
 
             Transaccion trans = new Transaccion(llavePublicaCliente, carteraTienda.llavePublica, monto);
             trans.generarFirma(llavePrivadaCliente);
+
 
             if (trans.verificarFirma()){
                 System.out.println("Transaccion firmada correctamente");
