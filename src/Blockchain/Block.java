@@ -6,8 +6,8 @@ import java.util.List;
 public class Block {
     public String hash;
     public String hashAnterior;
-    private List<Transaccion> transacciones;
-    private long selloTiempo;
+    private final List<Transaccion> transacciones;
+    private final long selloTiempo;
     private int nonce;
 
     public Block(String hashAnterior, List<Transaccion> transacciones) throws BlockchainExeption {

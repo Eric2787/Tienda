@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class Main  {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws RuntimeException {
         try {
             Scanner sc = new Scanner(System.in);
             System.out.println("Bienvenido a mi tienda");
@@ -41,6 +41,7 @@ public class Main  {
                 System.out.println("3. Efectivo");
                 System.out.println("4. Bitcoin");
                 int mpago = sc.nextInt();
+                sc.nextLine();
                 switch (mpago) {
                     case 1:
                         new TarjetaCredito().procesarPago(carrito.realizarCheckOut());
@@ -57,12 +58,12 @@ public class Main  {
                     default:
                         System.out.println("Opcion no valida");
                 }
-                System.out.println("Gracias por su compra. Desea salir? 1.Si 2.No");
+                System.out.println("Gracias por su compra. ¿Desea salir? 1.Si 2.No");
                 opc = sc.nextInt();
                 sc.nextLine();
             } while (opc != 1);
 
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
